@@ -18,34 +18,35 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _registerOnFirebase();
-    getMessage();
+    _getMessage();
     super.initState();
   }
 
-  void getMessage() {
+  void _getMessage() {
     _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-      print('received message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onResume: (Map<String, dynamic> message) async {
-      print('on resume $message');
-      setState(() => _message = message["notification"]["body"]);
-    }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch $message');
-      setState(() => _message = message["notification"]["body"]);
-    });
+      onMessage: (Map<String, dynamic> message) async {
+        setState(() => _message = message["notification"]["body"]);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        setState(() => _message = message["notification"]["body"]);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        setState(() => _message = message["notification"]["body"]);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Push Notifications Test'),
+        title: Text('Home Page'),
       ),
       body: Container(
-          child: Center(
-        child: Text("Message: $_message"),
-      )),
+        child: Center(
+          child: Text("Message: $_message"),
+        ),
+      ),
     );
   }
 }
